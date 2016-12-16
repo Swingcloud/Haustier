@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 		resources :pets, only: %i(show create)
 		resources :customers, only: %i(show create) do 
 			get 'matches', on: :member
+			post 'adopt', on: :member
 		end
 	end
 end

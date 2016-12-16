@@ -1,0 +1,3 @@
+class Rabbit < Pet
+
+end

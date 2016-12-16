@@ -18,4 +18,12 @@ class ApiV1::CustomersController < ApiController
 			render :json => { :message => "Please insert the name!"}, :status => 400
 		end
 	end
+
+	def matches
+		@customer = Customer.find(params[:id])
+		@pets = Pet.where(type: @customer.species).
+								where(age: @customer.age).
+								where(breed: @customer.breed)
+		render :json => { :message => "Here is your matching list", :list => JSON.parse(@pets.to_json) }
+	end
 end

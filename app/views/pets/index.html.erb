@@ -1,0 +1,77 @@
+<% google_map_config =Rails.application.config_for(:google_map) %>
+
+<div id="map"></div>
+<script>
+  function initMap() { 
+    var myLatLng = {lat: 22.431081, lng: 114.105857};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: myLatLng,
+      scrollwheel: false,
+      zoom: 12
+    });
+
+    setMarkers(map);
+    setGeolocation(map);
+  }
+    
+
+  function setGeolocation(map){
+    var infoWindow = new google.maps.InfoWindow({map: map});
+
+    // HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Here you are!');
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+      }
+    }
+
+  <% info_list = [] %>
+  <% @pets.map do |pet| %>
+    <% info_list.push([h(pet.name), pet.latitude, pet.longitude]) %>
+  <% end %>
+
+  var pets_info = <%= raw(info_list)  %>
+
+  function setMarkers(map){
+
+    for(var i = 0; i < pets_info.length; i++) {
+      var info = pets_info[i];
+      var marker = new google.maps.Marker({
+        position: {lat: info[1], lng: info[2]},
+        map: map,
+        html: info[0],
+        id: i,
+      });
+
+      google.maps.event.addListener(marker, 'click', function(){
+        var infowindow = new google.maps.InfoWindow({
+          id: this.id,
+          content:this.html,
+          position:this.getPosition()
+        });
+        infowindow.open(map);
+      });
+    }
+  }  
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= google_map_config['api_key'] %>&callback=initMap"
+    async defer></script>

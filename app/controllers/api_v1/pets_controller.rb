@@ -10,7 +10,8 @@ class ApiV1::PetsController < ApiController
 			type: params[:type].capitalize, 
 			name: params[:name], 
 			age: params[:age], 
-			breed: params[:breed] )
+			breed: params[:breed],
+			address: params[:address] )
 		if @pet.save
 			render :json => { :pet => @pet.to_json ,:message => "OK!!!!!!!!"}
 		else

@@ -21,10 +21,14 @@ class ApiV1::CustomersController < ApiController
 
 	def matches
 		@customer = Customer.find(params[:id])
-		@pets = Pet.where(type: @customer.species).
+		if @customer.preference == {}
+			@pets = Pet.all
+		else
+			@pets = Pet.where(type: @customer.species).
 								where(age: @customer.age).
 								where(breed: @customer.breed).
 								where(is_adopted: false)
+		end
 		render :json => { :message => "Here is your matching list", :list => JSON.parse(@pets.to_json) }
 	end
 

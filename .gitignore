@@ -22,3 +22,4 @@
 
 /config/database.yml
 /config/initializers/geocoder.rb
+/config/google_map.yml

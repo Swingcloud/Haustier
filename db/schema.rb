@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216134004) do
+ActiveRecord::Schema.define(version: 20161219023134) do
 
   create_table "customers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -23,10 +23,13 @@ ActiveRecord::Schema.define(version: 20161216134004) do
     t.string   "type"
     t.string   "name"
     t.integer  "age"
-    t.string   "breed",      default: ""
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "is_adopted", default: false
+    t.string   "breed",                 default: ""
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "is_adopted",            default: false
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
+    t.string   "address"
   end
 
 end

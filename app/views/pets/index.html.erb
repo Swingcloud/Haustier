@@ -1,8 +1,8 @@
 
 <div id="map"></div>
 <script>
-  function initMap() {
-    var myLatLng = {lat: 25.0853403, lng: 121.4231613};
+  function initMap() { 
+    var myLatLng = {lat: 22.431081, lng: 114.105857};
     var map = new google.maps.Map(document.getElementById('map'), {
       center: myLatLng,
       scrollwheel: false,
@@ -10,9 +10,14 @@
     });
 
     setMarkers(map);
+    setGeolocation(map);
+  }
+    
+
+  function setGeolocation(map){
     var infoWindow = new google.maps.InfoWindow({map: map});
 
-    // Try HTML5 geolocation.
+    // HTML5 geolocation.
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var pos = {
@@ -21,7 +26,7 @@
         };
 
         infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
+        infoWindow.setContent('Here you are!');
         map.setCenter(pos);
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
@@ -30,15 +35,13 @@
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
-  
-
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-      'Error: The Geolocation service failed.' :
-      'Error: Your browser doesn\'t support geolocation.');
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+      }
     }
-  }
 
   <% info_list = [] %>
   <% @pets.map do |pet| %>
@@ -48,17 +51,26 @@
   var pets_info = <%= raw(info_list)  %>
 
   function setMarkers(map){
+
     for(var i = 0; i < pets_info.length; i++) {
       var info = pets_info[i];
       var marker = new google.maps.Marker({
         position: {lat: info[1], lng: info[2]},
         map: map,
+        html: info[0],
+        id: i,
+      });
+
+      google.maps.event.addListener(marker, 'click', function(){
+        var infowindow = new google.maps.InfoWindow({
+          id: this.id,
+          content:this.html,
+          position:this.getPosition()
+        });
+        infowindow.open(map);
       });
     }
-  }
-
-  
-  
+  }  
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAenIzCgvNqINyZVd3MoGaCqCDN2bDqFYo&callback=initMap"
     async defer></script>

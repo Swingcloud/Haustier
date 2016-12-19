@@ -1,0 +1,36 @@
+
+<div id="map"></div>
+<script>
+  function initMap() {
+    var myLatLng = {lat: 25.0853403, lng: 121.4231613};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: myLatLng,
+      scrollwheel: false,
+      zoom: 12
+    });
+
+    setMarkers(map);
+  }
+
+  <% info_list = [] %>
+  <% @pets.map do |pet| %>
+    <% info_list.push([h(pet.name), pet.latitude, pet.longitude]) %>
+  <% end %>
+
+  var pets_info = <%= raw(info_list)  %>
+
+  function setMarkers(map){
+    for(var i = 0; i < pets_info.length; i++) {
+      var info = pets_info[i];
+      var marker = new google.maps.Marker({
+        position: {lat: info[1], lng: info[2]},
+        map: map,
+      });
+    }
+  }
+
+  
+  
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAenIzCgvNqINyZVd3MoGaCqCDN2bDqFYo&callback=initMap"
+    async defer></script>

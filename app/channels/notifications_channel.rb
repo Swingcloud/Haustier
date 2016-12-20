@@ -3,7 +3,7 @@ class NotificationsChannel < ApplicationCable::Channel
   def subscribed
     # need to get customers#show to get streaming
 
-    stream_from "public_channel"
+    stream_from "notification_#{current_user.id}_channel"
   end
 
   def unsubscribed

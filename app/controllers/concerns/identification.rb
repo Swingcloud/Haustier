@@ -17,4 +17,10 @@ module Identification
       end
     end
 
+    def erase_user
+      ActionCable.server.disconnect(current_user: @current_user)
+      @current_user = nil
+      cookies.delete(:user_id)
+    end
+
 end

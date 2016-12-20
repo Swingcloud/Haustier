@@ -18,6 +18,7 @@ class CustomersController < ApplicationController
 
 	private 
 		def find_customer
+			erase_user
 			@customer = Customer.find(params[:id])
 			identify_user(params[:id])
 		end

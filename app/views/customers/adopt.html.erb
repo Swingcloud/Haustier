@@ -1,0 +1,12 @@
+<h1>Congratulation! <%= @customer.name %></h1>
+
+<h2>you've already aopted this cute pet!</h2>
+<p>
+	Name: <%= @pet.name %><br>
+	Species: <%= @pet.type %><br>
+	<%if @pet.type == 'Dog' %>
+		Breed: <%= @pet.breed %><br>
+	<% end %>
+	Age: <%= @pet.age %><br>
+
+</p>

@@ -16,7 +16,16 @@ class CustomersController < ApplicationController
 		end
 	end
 
+	def adopt
+		@customer = Customer.find(params[:id])
+		@pet = Pet.find(params[:pet_id])
+		@pet.is_adopted = true
+		@pet.save
+	end
+
+
 	private 
+
 		def find_customer
 			erase_user
 			@customer = Customer.find(params[:id])

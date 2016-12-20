@@ -21,7 +21,7 @@ class ApiV1::CustomersController < ApiController
 
 	def matches
 		if @customer.preference == {}
-			@pets = Pet.all
+			@pets = Pet.all.where(is_adopted: false)
 		else
 			@pets = Pet.where(type: @customer.species).
 								where(age: @customer.age).

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 	end
 	resources :pets
 	scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
-		resources :pets, only: %i(show create)
+		resources :pets, only: %i(show create) do 
+			get 'matches', on: :member
+		end
 		resources :customers, only: %i(show create) do 
 			get 'matches', on: :member
 			post 'adopt', on: :member

@@ -20,6 +20,21 @@ class ApiV1::PetsController < ApiController
 	
 	end
 
+	def matches
+		@pet = Pet.find(params[:id])
+		if @pet.is_adopted == true
+			render :json => { :pet => @pet.name, :message => "This pet is no longer available to adopt!"}
+		else
+			@customers = Customer.where(preference: nil)
+			@customers = @customers + Customer.where('preference LIKE ? OR preference LIKE ? OR preference LIKE ? ', "%species: #{@pet.type}\n%", "%age: #{@pet.age}\n%", "%breed: #{@pet.breed}\n%")
+			render :json => { :message => "Here is the matching list", :list => JSON.parse(@customers.to_json) }						
+		end
+		
+	end
+
+
+
+
 
 
 

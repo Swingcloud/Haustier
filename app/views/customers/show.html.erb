@@ -1,0 +1,18 @@
+<h1>Welcome <%= @customer.name %>!</h1>
+
+<p>You are looking for a pet like:</p>
+<ul>
+	<li>Age: <%= @customer.age%></li>
+	<li>Species: <%= @customer.species %></li>
+	<% if @customer.species == "Dog" %>
+		<li>Breed: <%= @customer.breed %></li>
+	<% end %>
+</ul>
+
+<%= @current_user.name %>
+
+
+
+<%= link_to 'See my matches!', matches_customer_path(@customer) %>
+
+

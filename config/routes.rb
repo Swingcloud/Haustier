@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-
+	resources :customers do 
+		get 'matches', on: :member
+	end
 	resources :pets
 	scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
 		resources :pets, only: %i(show create)
@@ -10,4 +12,7 @@ Rails.application.routes.draw do
 	end
 
 	mount ActionCable.server => "/cable"
+
+	root :to => 'pets#index'
+
 end

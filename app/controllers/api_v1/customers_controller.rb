@@ -1,7 +1,7 @@
 class ApiV1::CustomersController < ApiController
+	before_action :find_customer, except: %i(create)
 
 	def show
-		@customer = Customer.find(params[:id])
 		render :json => @customer.to_json
 	end
 
@@ -20,7 +20,6 @@ class ApiV1::CustomersController < ApiController
 	end
 
 	def matches
-		@customer = Customer.find(params[:id])
 		if @customer.preference == {}
 			@pets = Pet.all
 		else
@@ -34,10 +33,15 @@ class ApiV1::CustomersController < ApiController
 
 
 	def adopt
-		@customer = Customer.find(params[:id])
 		@pet = Pet.find(params[:pet_id])
 		@pet.is_adopted = true
 		@pet.save
 		render :json => { :message => "thank you for your kindness!"}, status => 200
+	end
+
+	private
+
+	def find_customer
+		@customer = Customer.find(params[:id])
 	end
 end

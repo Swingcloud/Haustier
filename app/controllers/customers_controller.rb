@@ -1,6 +1,10 @@
 class CustomersController < ApplicationController
-	before_action :find_customer
+	before_action :find_customer, except: :index
 	include Identification
+
+	def index 
+		@customers = Customer.all
+	end
 
 	def show 
 	end

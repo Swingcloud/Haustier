@@ -1,0 +1,13 @@
+<h1>Here is all of our customers</h1>
+<ul>
+	<% @customers.each do |customer| %>
+		<li>
+			id: <%= customer.id %> |
+			<%= link_to  customer_path(customer) do %>
+				<%= customer.name %>
+			<% end %>
+		</li>
+	<% end %>
+</ul>
+
+<%= link_to 'Back to index', root_path %>

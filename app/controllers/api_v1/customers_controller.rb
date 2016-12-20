@@ -8,7 +8,7 @@ class ApiV1::CustomersController < ApiController
 	def create
 		@customer = Customer.new(
 			name: params[:name],
-			age: params[:age],
+			age: params[:age].to_i,
 			species: params[:species].capitalize,
 			breed: params[:breed]
 			)

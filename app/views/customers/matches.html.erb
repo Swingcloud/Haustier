@@ -1,0 +1,10 @@
+<h1>Hi <%= @customer.name %>!
+	<small>
+		Here is your match list:
+	</small>
+</h1>
+<ul id="match-list">
+	<% @pets.each do |pet| %>
+		<%= render :partial => "pet", :locals => { :pet => pet } %>
+	<% end %>
+</ul>

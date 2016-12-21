@@ -13,6 +13,7 @@ cp /config/initializers/geocoder.rb.example /config/initializers/geocoder.rb
 and change the parameters in it such as google api key and database setting.
 
 
+
 #Simple API Display
 
 
@@ -20,6 +21,13 @@ and change the parameters in it such as google api key and database setting.
 ###POST /api/v1/pets
 
 you can post new pet!
+
+parameters:
+- name: pet's name
+- age: about pet's age
+- type: species of the pet
+- breed: if speicies is the dog, then you need to add this parameter
+- address: where the pet is located
 
 ### GET /api/v1/pets/{id}
 
@@ -32,6 +40,12 @@ Get an array of "matching" customers for the given pet
 ###POST /api/v1/customers
 
 Add a new customer to the system
+
+parameters:
+- name: customer's name
+- age: the pet's age they want to adopt
+- species: the pet's species they want to adopt
+- breed: if species is the dog, customer can pass this parameter
 
 Together with their preferences for pets
 
@@ -48,6 +62,9 @@ Get an array of "matching" Pets for the given customer
 The Customer adopts the given Pet
 
 The Pet and Customer should no longer appear in /matches queries
+
+parameters:
+- pet_id: the pet's id 
 
 
 ##Websocket

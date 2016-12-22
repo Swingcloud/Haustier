@@ -2,11 +2,12 @@
 class NotificationsChannel < ApplicationCable::Channel
   def subscribed
     # need to get customers#show to get streaming
-
+    stop_all_streams
     stream_from "notification_#{current_user.id}_channel"
   end
 
   def unsubscribed
+  	stop_all_streams
     # Any cleanup needed when channel is unsubscribed
   end
 end

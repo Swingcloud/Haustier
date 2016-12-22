@@ -2,7 +2,10 @@
 	Name: <%= pet.name %> 
 	<ul>
 		<li>Age: <%= pet.age %></li>
-		<li><%= link_to 'adopt this pet!', adopt_customer_path(@customer, pet_id: pet.id) %></li>
+		<% if @customer %>
+			<li><%= link_to 'adopt this pet!', adopt_customer_path(@customer, pet_id: pet.id) %></li>
+		<% else %>
+			<li><%= link_to 'adopt this pet!', adopt_customer_path(customer, pet_id: pet.id) %></li>
+		<% end  %>
 	</ul>
 </li>
-

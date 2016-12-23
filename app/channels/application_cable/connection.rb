@@ -5,7 +5,11 @@ module ApplicationCable
 
   def connect
     self.current_user = find_marked_user
-    logger.add_tags 'ActionCable', current_user.name
+    if find_marked_user
+      logger.add_tags 'ActionCable', current_user.name
+    else
+      logger.add_tags 'ActionCable', "new_user"
+    end 
   end
 
   protected

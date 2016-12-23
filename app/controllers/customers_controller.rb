@@ -1,10 +1,6 @@
 class CustomersController < ApplicationController
 	before_action :find_customer, except: :index
-	include Identification
 
-	def index 
-		@customers = Customer.all
-	end
 
 	def show 
 	end
@@ -21,7 +17,6 @@ class CustomersController < ApplicationController
 	end
 
 	def adopt
-		@customer = Customer.find(params[:id])
 		@pet = Pet.find(params[:pet_id])
 		@pet.is_adopted = true
 		@pet.save
@@ -31,8 +26,6 @@ class CustomersController < ApplicationController
 	private 
 
 		def find_customer
-			erase_user
 			@customer = Customer.find(params[:id])
-			identify_user(params[:id])
 		end
 end

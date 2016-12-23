@@ -7,7 +7,7 @@ module Identification
 
   private
     def mark_current_user
-      identify_user(cookies.signed[:user_id])
+      identify_user(cookies.signed[:user_id]) || redirect_to(new_session_path)
     end
 
     def identify_user(user_id)

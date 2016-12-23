@@ -1,0 +1,7 @@
+<h1>Choose one of the following customers</h1>
+
+<ul>
+  <% @customers.each do |customer| %>
+    <li><%= link_to customer.name, session_url(user_id: customer.id), method: :post %></li>
+  <% end %>
+</ul>

@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-	resources :customers do 
+	resource :session
+	resources :customers , only: %i(show) do 
 		get 'matches', on: :member
 		get 'adopt', on: :member
 	end
-	resources :pets
+	resources :pets, only: %i(index show)
 	scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
 		resources :pets, only: %i(show create) do 
 			get 'matches', on: :member

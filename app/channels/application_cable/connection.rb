@@ -5,16 +5,17 @@ module ApplicationCable
 
   def connect
     self.current_user = find_marked_user
-    if find_marked_user
-      logger.add_tags 'ActionCable', current_user.name
-    else
-      logger.add_tags 'ActionCable', "new_user"
-    end 
+    logger.add_tags 'ActionCable', current_user.name
   end
 
   protected
+
     def find_marked_user
-      marked_user = Customer.find_by(id: cookies.signed[:user_id])
+      if marked_user = Customer.find_by(id: cookies.signed[:user_id])
+        marked_user
+      else
+        reject_unauthorized_connection
+      end
     end
   end
 end

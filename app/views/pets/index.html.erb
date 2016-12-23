@@ -1,6 +1,19 @@
 <% google_map_config =Rails.application.config_for(:google_map) %>
 
 <div id="map"></div>
+<% @pets.each do |pet| %>
+  <ul>
+    <li>Name: <%= pet.name %></li>
+    <ul>
+      <li>age: <%= pet.age %></li>
+      <li>species: <%= pet.type %></li>
+      <% if !pet.breed.nil? %>
+        <li>breed: <%= pet.breed %></li>
+      <% end %>
+    </ul>
+  </ul>  
+<% end %>
+
 
 <script>
   function initMap() { 
